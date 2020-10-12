@@ -3,6 +3,7 @@ package com.github.arxintegration.sample.service;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -198,4 +199,5 @@ public class Printer {
         }
         System.out.format("+" + StringUtils.repeat("-", charCountLongestQi) + "+---------------+--------------+%n");
     }
+    
 }

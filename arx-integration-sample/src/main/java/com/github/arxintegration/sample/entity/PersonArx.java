@@ -41,7 +41,7 @@ import org.hibernate.annotations.Type;
 public class PersonArx {
     @Id
     @Column(name = "ID", unique = true, nullable = false)
-    private Long id;
+    private Integer id;
     
     @Column(name = "ORGANISATION_NAME", length = 50)
     private String organisationName;
@@ -202,7 +202,7 @@ public class PersonArx {
         return sex;
     }
 
-    public Long getId() {
+    public Integer getId() {
 		return id;
 	}
 
@@ -310,7 +310,7 @@ public class PersonArx {
         this.guardianship = guardianship;
     }
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

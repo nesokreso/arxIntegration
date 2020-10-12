@@ -22,7 +22,7 @@ public class PersonService {
 	@SuppressWarnings("unchecked")
 	public List<PersonArx> find(String name) {
 		Query query = this.entityManager.createNamedQuery("PersonArx.find");
-		query.setParameter("official_name", "%" + name + "%");
+		query.setParameter("name", "%" + name + "%");
 		return query.getResultList();
 	}
 
@@ -53,12 +53,23 @@ public class PersonService {
         return merged;
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Integer id) {
         PersonArx entity = readById(id);
         delete(entity);
     }
 
-    public PersonArx readById(Long id) {
+    public PersonArx readById(Integer id) {
         return entityManager.find(PersonArx.class, id);
     }
+    
+    @SuppressWarnings("unchecked")
+	public List<PersonArx> executeQuery(String query) {
+    	List<PersonArx> persons;
+    	persons = entityManager.createQuery(query).getResultList();
+    	return persons;
+    }
+    
+    public void flush() {
+		this.entityManager.flush();
+	}
 }
