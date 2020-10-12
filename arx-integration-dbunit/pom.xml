@@ -10,8 +10,8 @@
 	<artifactId>arx-integration-dbunit</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>Spring Test DBUnit</name>
-	<description>Integration between the Spring testing framework and DBUnit</description>
+	<name>Main project arx integration</name>
+	<description>Integration between the example project and arx</description>
 	<url>https://github.com/nesokreso/arxIntegration</url>
 	<licenses>
 		<license>
@@ -42,38 +42,6 @@
 	</developers>
 	<build>
 		<plugins>
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.7</version>
-				<executions>
-					<execution>
-						<id>copy-readme</id>
-						<phase>pre-site</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<copy file="../README.md" tofile="src/site/markdown/index.md" overwrite="true" />
-							</tasks>
-						</configuration>
-					</execution>
-					<execution>
-						<id>fix-page-titles</id>
-						<phase>site</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<replace file="${project.build.directory}/site/index.html" token="&lt;title&gt;&lt;/title&gt;" value="&lt;title&gt;Spring-Test DBUnit&lt;/title&gt;" />
-								<replace file="${project.build.directory}/site/faq.html" token="&lt;title&gt;&lt;/title&gt;" value="&lt;title&gt;Frequently Asked Questions&lt;/title&gt;" />
-								<replace file="${project.build.directory}/site/sample.html" token="&lt;title&gt;&lt;/title&gt;" value="&lt;title&gt;Quick Start Example&lt;/title&gt;" />
-							</tasks>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>2.5</version>
