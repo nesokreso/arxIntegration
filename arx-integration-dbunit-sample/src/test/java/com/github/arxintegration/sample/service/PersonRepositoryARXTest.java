@@ -82,7 +82,7 @@ public class PersonRepositoryARXTest {
     private PersonService repository;
 
     private final String sqlP = "Select p from ch.admin.astra.ivz.domain.model.Person p";
-    private ExamplePerson printer;
+    private Printer printer;
     private final DefaultData data = Data.create();
     private List<PersonArx> persons;
     private final SimpleDateFormat arxFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -94,7 +94,7 @@ public class PersonRepositoryARXTest {
     private EntityManager entityManager;
 
     public PersonRepositoryARXTest() {
-        printer = new ExamplePerson();
+        printer = new Printer();
     }
 
     @Before
@@ -183,7 +183,7 @@ public class PersonRepositoryARXTest {
         // First next() call to omit the header
         transformed.next();
         List<String> anonymized;
-        Person person;
+        PersonArx person;
         while (transformed.hasNext()) {
             // Print results
             String[] transformedStrings = transformed.next();

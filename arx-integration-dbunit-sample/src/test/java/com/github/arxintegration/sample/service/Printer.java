@@ -1,0 +1,201 @@
+package com.github.arxintegration.sample.service;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.deidentifier.arx.ARXLattice.ARXNode;
+import org.deidentifier.arx.ARXPopulationModel;
+import org.deidentifier.arx.ARXResult;
+import org.deidentifier.arx.Data;
+import org.deidentifier.arx.DataHandle;
+import org.deidentifier.arx.risk.RiskEstimateBuilder;
+import org.deidentifier.arx.risk.RiskModelAttributes;
+
+/**
+ * This class provides a base class for examples.
+ *
+ * @author Nenad Jevdjenic
+ */
+public class Printer {
+
+    public Printer() {
+    }
+
+    /**
+     * Prints a given data handle.
+     *
+     * @param handle
+     */
+    public void print(DataHandle handle) {
+        final Iterator<String[]> itHandle = handle.iterator();
+        print(itHandle);
+    }
+
+    /**
+     * Prints a given iterator.
+     *
+     * @param iterator
+     */
+    public void print(Iterator<String[]> iterator) {
+        while (iterator.hasNext()) {
+            System.out.print("   ");
+            System.out.println(Arrays.toString(iterator.next()));
+        }
+    }
+
+    /**
+     * Prints java array.
+     *
+     * @param array
+     */
+    public void printArray(String[][] array) {
+        System.out.print("{");
+        for (int j=0; j<array.length; j++){
+            String[] next = array[j];
+            System.out.print("{");
+            for (int i = 0; i < next.length; i++) {
+                String string = next[i];
+                System.out.print("\"" + string + "\"");
+                if (i < next.length - 1) {
+                    System.out.print(",");
+                }
+            }
+            System.out.print("}");
+            if (j<array.length-1) {
+                System.out.print(",\n");
+            }
+        }
+        System.out.println("}");
+    }
+
+    /**
+     * Prints a given data handle.
+     *
+     * @param handle
+     */
+    public void printHandle(DataHandle handle) {
+        final Iterator<String[]> itHandle = handle.iterator();
+        printIterator(itHandle);
+    }
+    
+    /**
+     * Prints java array.
+     *
+     * @param iterator
+     */
+    public void printIterator(Iterator<String[]> iterator) {
+        while (iterator.hasNext()) {
+            String[] next = iterator.next();
+            System.out.print("[");
+            for (int i = 0; i < next.length; i++) {
+                String string = next[i];
+                System.out.print(string);
+                if (i < next.length - 1) {
+                    System.out.print(", ");
+                }
+            }
+            System.out.println("]");
+        }
+    }
+    
+    /**
+     * Prints the result.
+     *
+     * @param result
+     * @param data
+     */
+    public void printResult(final ARXResult result, final Data data) {
+
+        // Print time
+        final DecimalFormat df1 = new DecimalFormat("#####0.00");
+        final String sTotal = df1.format(result.getTime() / 1000d) + "s";
+        System.out.println(" - Time needed: " + sTotal);
+
+        // Extract
+        final ARXNode optimum = result.getGlobalOptimum();
+        final List<String> qis = new ArrayList<String>(data.getDefinition().getQuasiIdentifyingAttributes());
+
+        if (optimum == null) {
+            System.out.println(" - No solution found!");
+            return;
+        }
+
+        // Initialize
+        final StringBuffer[] identifiers = new StringBuffer[qis.size()];
+        final StringBuffer[] generalizations = new StringBuffer[qis.size()];
+        int lengthI = 0;
+        int lengthG = 0;
+        for (int i = 0; i < qis.size(); i++) {
+            identifiers[i] = new StringBuffer();
+            generalizations[i] = new StringBuffer();
+            identifiers[i].append(qis.get(i));
+            generalizations[i].append(optimum.getGeneralization(qis.get(i)));
+            if (data.getDefinition().isHierarchyAvailable(qis.get(i)))
+                generalizations[i].append("/").append(data.getDefinition().getHierarchy(qis.get(i))[0].length - 1);
+            lengthI = Math.max(lengthI, identifiers[i].length());
+            lengthG = Math.max(lengthG, generalizations[i].length());
+        }
+
+        // Padding
+        for (int i = 0; i < qis.size(); i++) {
+            while (identifiers[i].length() < lengthI) {
+                identifiers[i].append(" ");
+            }
+            while (generalizations[i].length() < lengthG) {
+                generalizations[i].insert(0, " ");
+            }
+        }
+
+        // Print
+        System.out.println(" - Information loss: " + result.getGlobalOptimum().getLowestScore() + " / " + result.getGlobalOptimum().getHighestScore());
+        System.out.println(" - Optimal generalization");
+        for (int i = 0; i < qis.size(); i++) {
+            System.out.println("   * " + identifiers[i] + ": " + generalizations[i]);
+        }
+        System.out.println(" - Statistics");
+        System.out.println(result.getOutput(result.getGlobalOptimum(), false).getStatistics().getEquivalenceClassStatistics());
+    }
+
+    public void analyzeAttributes(DataHandle handle) {
+        ARXPopulationModel populationmodel = ARXPopulationModel.create(ARXPopulationModel.Region.USA);
+        RiskEstimateBuilder builder = handle.getRiskEstimator(populationmodel);
+        RiskModelAttributes riskmodel = builder.getAttributeRisks();
+
+        // output
+        printPrettyTable(riskmodel.getAttributeRisks());
+    }
+
+    public void printPrettyTable(RiskModelAttributes.QuasiIdentifierRisk[] quasiIdentifiers) {
+        // get char count of longest quasi-identifier
+        int charCountLongestQi = quasiIdentifiers[quasiIdentifiers.length - 1].getIdentifier().toString().length();
+
+        // make sure that there is enough space for the table header strings
+        charCountLongestQi = Math.max(charCountLongestQi, 12);
+
+        // calculate space needed
+        String leftAlignFormat = "| %-" + charCountLongestQi + "s | %13.2f | %12.2f |%n";
+
+        // add 2 spaces that are in the string above on the left and right side
+        // of the first pattern
+        charCountLongestQi += 2;
+
+        // subtract the char count of the column header string to calculate
+        // how many spaces we need for filling up to the right columnborder
+        int spacesAfterColumHeader = charCountLongestQi - 12;
+
+        System.out.format("+" + StringUtils.repeat("-", charCountLongestQi) + "+---------------+--------------+%n");
+        System.out.format("| Identifier " + StringUtils.repeat(" ", spacesAfterColumHeader)
+                + "|   Distinction |   Separation |%n");
+        System.out.format("+" + StringUtils.repeat("-", charCountLongestQi) + "+---------------+--------------+%n");
+        for (RiskModelAttributes.QuasiIdentifierRisk quasiIdentifier : quasiIdentifiers) {
+            // print every Quasi-Identifier
+            System.out.format(leftAlignFormat, quasiIdentifier.getIdentifier(), quasiIdentifier.getDistinction() * 100,
+                    quasiIdentifier.getSeparation() * 100);
+        }
+        System.out.format("+" + StringUtils.repeat("-", charCountLongestQi) + "+---------------+--------------+%n");
+    }
+}

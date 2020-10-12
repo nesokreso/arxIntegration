@@ -27,7 +27,7 @@ public class PersonServiceTest {
 	private PersonService personService;
 
 	@Test
-	@DatabaseSetup("sampleData.xml")
+	@DatabaseSetup("PersonRepositoryArx_dbunit.xml")
 	public void testFind() throws Exception {
 		List<Person> personList = this.personService.find("jevd");
 		assertEquals(1, personList.size());
