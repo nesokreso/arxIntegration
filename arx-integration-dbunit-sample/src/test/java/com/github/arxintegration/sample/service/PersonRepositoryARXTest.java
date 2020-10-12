@@ -35,17 +35,14 @@ import org.deidentifier.arx.aggregates.HierarchyBuilderRedactionBased.Order;
 import org.deidentifier.arx.criteria.AverageReidentificationRisk;
 import org.deidentifier.arx.criteria.EDDifferentialPrivacy;
 import org.deidentifier.arx.criteria.KAnonymity;
+import org.deidentifier.arx.examples.person.ExamplePerson;
 import org.deidentifier.arx.metric.Metric;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-import ch.admin.astra.ivz.arx.Printer;
-import ch.admin.astra.ivz.domain.PersonPrivateRepository;
-import ch.admin.astra.ivz.domain.model.Person;
-import ch.admin.astra.ivz.spring.testutils.db.ReadOnlyTest;
-import ch.admin.astra.ivz.spring.testutils.db.TestDataSet;
+import com.github.arxintegration.sample.entity.PersonArx;
 
 /**
  * Test cases for {@link PersonRepositoryJPA} and ARX library
@@ -82,12 +79,12 @@ public class PersonRepositoryARXTest {
     private static final String REMARK = "remark";
     
     @Autowired
-    private PersonPrivateRepository repository;
+    private PersonService repository;
 
     private final String sqlP = "Select p from ch.admin.astra.ivz.domain.model.Person p";
-    private Printer printer;
+    private ExamplePerson printer;
     private final DefaultData data = Data.create();
-    private List<Person> persons;
+    private List<PersonArx> persons;
     private final SimpleDateFormat arxFormat = new SimpleDateFormat("dd.MM.yyyy");
     private final ARXAnonymizer anonymizer = new ARXAnonymizer();
     private final ARXConfiguration config = ARXConfiguration.create();
@@ -97,7 +94,7 @@ public class PersonRepositoryARXTest {
     private EntityManager entityManager;
 
     public PersonRepositoryARXTest() {
-        printer = new Printer();
+        printer = new ExamplePerson();
     }
 
     @Before
@@ -106,7 +103,7 @@ public class PersonRepositoryARXTest {
         data.add(ID, ORGANISATION_NAME, ORGANISATION_ADDITIONAL_NAME, DEPARTMENT, OFFICIAL_NAME, ORIGINAL_NAME,
                 FIRST_NAME, DATE_OF_BIRTH);
 
-        for (Person p : persons) {
+        for (PersonArx p : persons) {
             data.add(String.valueOf(p.getId()), String.valueOf(p.getOrganisationName()),
                     String.valueOf(p.getOrganisationAdditionalName()), String.valueOf(p.getDepartment()),
                     String.valueOf(p.getOfficialName()), String.valueOf(p.getOriginalName()),
@@ -139,59 +136,12 @@ public class PersonRepositoryARXTest {
         data.getDefinition().setAttributeType(ORIGINAL_NAME, builderOriginallName);
         data.getDefinition().setDataType(ORIGINAL_NAME, DataType.STRING);
 
-
-        // DefaultHierarchy sex = Hierarchy.create();
-        // sex.add("MALE", "FEMALE");
-        // sex.add("FEMALE", "MALE");
-        // sex.add("null", "MALE");
-        // data.getDefinition().setAttributeType(SEX, sex);
-        // data.getDefinition().setDataType(SEX, DataType.STRING);
-        // data.getDefinition().setHierarchy("gender", sex);
-
         data.getDefinition().setAttributeType(DATE_OF_BIRTH, AttributeType.QUASI_IDENTIFYING_ATTRIBUTE);
         data.getDefinition().setDataType(DATE_OF_BIRTH, DataType.DATE);
         data.getDefinition().setAttributeType(DATE_OF_BIRTH, MicroAggregationFunction.createArithmeticMean());
-
-        // DefaultHierarchy lang = Hierarchy.create();
-        // lang.add("d", "f");
-        // lang.add("i", "d");
-        // lang.add("f", "e");
-        // lang.add("e", "i");
-        // lang.add("null", "d");
-        // data.getDefinition().setAttributeType(LANGUAGE, lang);
-
-        // HierarchyBuilderRedactionBased<?> builderLanguage =
-        // createHierarchy();
-        // data.getDefinition().setAttributeType(LANGUAGE, builderLanguage);
-
-        // data.getDefinition().setDataType(LANGUAGE, DataType.STRING);
-
-        // With the DefaultHierarchy you must set all possible values manually,
-        // so it's only preferable for limited possibilities
-
-        // DefaultHierarchy nation = Hierarchy.create();
-        // nation.add("CH", "GB");
-        // nation.add("GB", "IT");
-        // nation.add("SRB", "FR");
-        // nation.add("DE", "USA");
-        // nation.add("USA", "CAD");
-        // nation.add("FR", "MEX");
-        // nation.add("IT", "CH");
-        // nation.add("null", "SRB");
-        //
-
-
-        // Perform risk analysis
-        System.out.println("\n - Input data");
-        printer.print(data.getHandle());
-
-        System.out.println("\n - Quasi-identifiers with values (in percent):");
-        // printer.analyzeAttributes(data.getHandle());
-
     }
 
     @Test
-    @ReadOnlyTest
     public void testAverageReindentificationRisk() throws IOException {
         config.addPrivacyModel(new AverageReidentificationRisk(0.5d));
         result = anonymizer.anonymize(data, config);
@@ -199,7 +149,6 @@ public class PersonRepositoryARXTest {
     }
 
     @Test
-    @ReadOnlyTest
     public void testKAnonyimity() throws IOException {
         config.addPrivacyModel(new KAnonymity(4));
         config.setSuppressionLimit(0d);
@@ -209,7 +158,6 @@ public class PersonRepositoryARXTest {
     }
 
     // @Test
-    @ReadOnlyTest
     public void testDifferentialPrivacy() throws IOException {
         // Create a differential privacy criterion
         EDDifferentialPrivacy criterion = new EDDifferentialPrivacy(2d, 0.00001d,
