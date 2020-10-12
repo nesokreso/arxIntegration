@@ -22,7 +22,7 @@ import org.dbunit.dataset.ReplacementDataSet;
 /**
  * Strategy interface that can be used to modify a {@link IDataSet}.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 public interface DataSetModifier {
 

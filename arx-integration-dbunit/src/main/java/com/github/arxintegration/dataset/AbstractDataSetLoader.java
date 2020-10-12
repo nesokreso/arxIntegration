@@ -26,7 +26,7 @@ import org.springframework.core.io.ResourceLoader;
  * Provides a <em>Template Method</em> based approach for {@link #loadDataSet(Class, String) loading} data using a
  * Spring {@link #getResourceLoader resource loader}.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  *
  * @see #getResourceLoader
  * @see #getResourceLocations

@@ -22,7 +22,7 @@ import com.github.arxintegration.annotation.DatabaseOperation;
  * Strategy used to lookup a DBUnit {@link org.dbunit.operation.DatabaseOperation Database Operation} from a
  * {@link DatabaseOperation enum value}.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  * @see DefaultDatabaseOperationLookup
  * @see MicrosoftSqlDatabaseOperationLookup
  */

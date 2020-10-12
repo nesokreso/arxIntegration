@@ -32,7 +32,7 @@ import com.github.arxintegration.annotation.ExpectedDatabase;
  *
  * @see TransactionalTestExecutionListener
  * @see DbUnitTestExecutionListener
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 public class TransactionDbUnitTestExecutionListener extends TestExecutionListenerChain {
 

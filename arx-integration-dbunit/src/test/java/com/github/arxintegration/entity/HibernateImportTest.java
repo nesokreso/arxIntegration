@@ -25,7 +25,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * Test the initial state of the database to ensure that import.sql has run.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/META-INF/dbunit-context.xml")

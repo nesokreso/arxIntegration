@@ -6,7 +6,7 @@ import org.dbunit.dataset.ReplacementDataSet;
 /**
  * {@link DataSetModifier} to create a {@link ReplacementDataSet}.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 public abstract class ReplacementDataSetModifier implements DataSetModifier {
 

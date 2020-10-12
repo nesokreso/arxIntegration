@@ -30,7 +30,7 @@ import org.springframework.util.Assert;
  * {@link DatabaseDataSourceConnection} using the specified {@link #setDataSource dataSource}. Additional configuration
  * is also supported using {@link #setDatabaseConfig(DatabaseConfigBean)}.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 public class DatabaseDataSourceConnectionFactoryBean implements FactoryBean<DatabaseDataSourceConnection> {
 

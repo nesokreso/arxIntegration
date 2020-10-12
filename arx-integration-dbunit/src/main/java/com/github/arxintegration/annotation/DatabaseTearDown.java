@@ -35,7 +35,7 @@ import com.github.arxintegration.DbUnitTestExecutionListener;
  * @see DbUnitConfiguration
  * @see DbUnitTestExecutionListener
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 @Documented
 @Inherited

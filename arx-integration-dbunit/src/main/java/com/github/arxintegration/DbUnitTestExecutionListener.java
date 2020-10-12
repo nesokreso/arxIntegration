@@ -61,7 +61,7 @@ import com.github.arxintegration.operation.DefaultDatabaseOperationLookup;
  *
  * @see TransactionDbUnitTestExecutionListener
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 public class DbUnitTestExecutionListener extends AbstractTestExecutionListener {
 

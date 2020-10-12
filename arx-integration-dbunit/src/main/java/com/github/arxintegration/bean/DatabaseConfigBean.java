@@ -33,7 +33,7 @@ import org.springframework.util.Assert;
  * spring using standard property arguments. The configuration from this bean can be {@link #apply applied} to an
  * existing {@link DatabaseConfig}.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 public class DatabaseConfigBean {
 

@@ -24,7 +24,7 @@ import com.github.arxintegration.annotation.DatabaseOperation;
 /**
  * Default implementation of {@link DatabaseOperationLookup}.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 public class DefaultDatabaseOperationLookup implements DatabaseOperationLookup {
 

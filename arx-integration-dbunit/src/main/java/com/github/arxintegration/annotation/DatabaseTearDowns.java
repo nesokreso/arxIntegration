@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 /**
  * Container for repeating {@link DatabaseTearDown} annotations.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  * @see DatabaseTearDown
  */
 @Documented

@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 /**
  * Container for repeating {@link ExpectedDatabase} annotations.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  * @see ExpectedDatabase
  */
 @Documented

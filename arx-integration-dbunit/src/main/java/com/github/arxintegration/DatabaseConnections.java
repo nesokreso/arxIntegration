@@ -25,7 +25,7 @@ import org.springframework.util.StringUtils;
 /**
  * Holds a number of {@link IDatabaseConnection} beans.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 public class DatabaseConnections {
 

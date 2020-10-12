@@ -26,7 +26,7 @@ import org.springframework.core.style.ToStringCreator;
 /**
  * A sample entity for use with tests.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 @Entity
 public class SampleEntity {

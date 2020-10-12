@@ -28,7 +28,7 @@ import com.github.arxintegration.dataset.DataSetModifier;
 /**
  * A collection of {@link DataSetModifier} items loaded during testing.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 class DataSetModifiers implements DataSetModifier {
 

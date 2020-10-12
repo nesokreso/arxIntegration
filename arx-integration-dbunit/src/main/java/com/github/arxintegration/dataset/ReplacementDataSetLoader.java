@@ -13,7 +13,7 @@ import org.springframework.util.Assert;
  * sub-strings. By default will replace "[null]" with <code>null</code>.
  *
  * @author Stijn Van Bael
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 public class ReplacementDataSetLoader implements DataSetLoader {
 

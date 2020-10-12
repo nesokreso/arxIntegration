@@ -36,7 +36,7 @@ import com.github.arxintegration.dataset.DataSetModifier;
  *
  * @see DbUnitTestExecutionListener
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  * @author Mario Zagar
  */
 @Documented

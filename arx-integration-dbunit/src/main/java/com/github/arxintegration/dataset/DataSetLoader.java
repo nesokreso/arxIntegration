@@ -23,7 +23,7 @@ import org.dbunit.dataset.IDataSet;
  * <p>
  * Concrete implementations must provide a <code>public</code> no-args constructor.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  *
  * @see FlatXmlDataSetLoader
  */

@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.arxintegration.parent</groupId>
 	<artifactId>arxIntegration</artifactId>
-	<version>1.3.0-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Spring Test DBUnit Parent</name>
 	<modules>
-		<module>spring-test-dbunit</module>
-		<module>spring-test-dbunit-sample</module>
+		<module>arx-integration</module>
+		<module>arx-integration-sample</module>
 	</modules>
 	<prerequisites>
 		<maven>3.2.3</maven>

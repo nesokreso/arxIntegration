@@ -22,7 +22,7 @@ package com.github.arxintegration.annotation;
  * @see DatabaseSetup
  * @see DatabaseTearDown
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 public enum DatabaseOperation {
 

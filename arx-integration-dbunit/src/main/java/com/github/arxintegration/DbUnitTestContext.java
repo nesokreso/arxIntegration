@@ -27,7 +27,7 @@ import com.github.arxintegration.operation.DatabaseOperationLookup;
 /**
  * Provides context for the {@link DbUnitRunner}.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 public interface DbUnitTestContext {
 

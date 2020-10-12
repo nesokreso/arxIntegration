@@ -26,7 +26,7 @@ import com.github.arxintegration.annotation.DatabaseOperation;
 /**
  * Microsoft SQL Server implementation of {@link DatabaseOperationLookup}.
  *
- * @author Phillip Webb
+ * @author Nenad Jevdjenic
  */
 public class MicrosoftSqlDatabaseOperationLookup extends DefaultDatabaseOperationLookup {
 
