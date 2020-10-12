@@ -29,9 +29,9 @@ public class PersonServiceTest {
 	@Test
 	@DatabaseSetup("sampleData.xml")
 	public void testFind() throws Exception {
-		List<Person> personList = this.personService.find("hil");
+		List<Person> personList = this.personService.find("jevd");
 		assertEquals(1, personList.size());
-		assertEquals("Phillip", personList.get(0).getFirstName());
+		assertEquals("Nenad", personList.get(0).getFirstName());
 	}
 
 	@Test

@@ -1,7 +1,5 @@
 package com.github.arxintegration.sample.entity;
 
-import static ch.admin.astra.ivz.util.ValueHelper.prepareDate;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -335,5 +333,8 @@ public class PersonArx {
 	public void setMandator(String mandator) {
 		this.mandator = mandator;
 	}
-    
+	
+    public static Date prepareDate(Date date) {
+        return date == null ? null : (Date) date.clone();
+    }
 }
