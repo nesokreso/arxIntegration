@@ -8,7 +8,6 @@ package com.github.arxintegration.sample.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -17,9 +16,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.deidentifier.arx.ARXAnonymizer;
 import org.deidentifier.arx.ARXConfiguration;
 import org.deidentifier.arx.ARXResult;
@@ -27,13 +23,10 @@ import org.deidentifier.arx.AttributeType;
 import org.deidentifier.arx.AttributeType.MicroAggregationFunction;
 import org.deidentifier.arx.Data;
 import org.deidentifier.arx.Data.DefaultData;
-import org.deidentifier.arx.DataGeneralizationScheme;
-import org.deidentifier.arx.DataGeneralizationScheme.GeneralizationDegree;
 import org.deidentifier.arx.DataType;
 import org.deidentifier.arx.aggregates.HierarchyBuilderRedactionBased;
 import org.deidentifier.arx.aggregates.HierarchyBuilderRedactionBased.Order;
 import org.deidentifier.arx.criteria.AverageReidentificationRisk;
-import org.deidentifier.arx.criteria.EDDifferentialPrivacy;
 import org.deidentifier.arx.criteria.KAnonymity;
 import org.deidentifier.arx.metric.Metric;
 import org.junit.After;
@@ -125,6 +118,8 @@ public class PersonARXTest {
                     String.valueOf(p.getOfficialName()), String.valueOf(p.getOriginalName()),
                     String.valueOf(p.getFirstName()), formatIvzDate(p.getDateOfBirth()));
         }
+        data.getDefinition().setAttributeType(ID, AttributeType.INSENSITIVE_ATTRIBUTE);
+		data.getDefinition().setDataType(ID, DataType.INTEGER);
         createHierarchyString(data, ORGANISATION_NAME);
 		createHierarchyString(data, ORGANISATION_ADDITIONAL_NAME);
 		createHierarchyString(data, DEPARTMENT);
@@ -193,14 +188,6 @@ public class PersonARXTest {
         }
         persons = personService.executeQuery(sqlP);
         assertEquals(initialPersonCount, persons.size());
-        assertEquals("nenad", persons.get(1).getFirstName());
-        assertEquals("jevdjenic", persons.get(1).getOfficialName());
-    }
-
-    private HierarchyBuilderRedactionBased<?> createHierarchy() {
-        HierarchyBuilderRedactionBased<?> builderOfficialName = HierarchyBuilderRedactionBased
-                .create(Order.RIGHT_TO_LEFT, Order.RIGHT_TO_LEFT, ' ', generateRandomString());
-        return builderOfficialName;
     }
 
     private HierarchyBuilderRedactionBased<?> createHierarchyString(Data data, String attribute) {

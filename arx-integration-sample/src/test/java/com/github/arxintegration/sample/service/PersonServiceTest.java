@@ -2,18 +2,8 @@ package com.github.arxintegration.sample.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.deidentifier.arx.ARXAnonymizer;
-import org.deidentifier.arx.ARXConfiguration;
-import org.deidentifier.arx.ARXResult;
-import org.deidentifier.arx.Data;
-import org.deidentifier.arx.Data.DefaultData;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,27 +25,9 @@ import com.github.arxintegration.sample.entity.PersonArx;
 public class PersonServiceTest {
 	@Autowired
 	private PersonService personService;
-
-	/** ARX specitfic classes */
-	protected static ARXAnonymizer anonymizer = new ARXAnonymizer();
-	protected static ARXConfiguration config = ARXConfiguration.create();
-	protected static ARXResult result;
-	private final DefaultData data = Data.create();
-    
 	private final String sqlP = "Select p from com.github.arxintegration.sample.entity.PersonArx p";
     /** Helper class */
-	private Printer printer = new Printer();
     private List<PersonArx> persons;
-    protected static final SimpleDateFormat arxFormat = new SimpleDateFormat("dd.MM.yyyy");
-    /** CSV Input files */
-	protected static final String CSV_SMALL = "data/20_persons.csv";
-	protected static final String CSV_LARGE = "data/146k_persons.csv";
-	/** DB connection settings */
-	protected static final String ROWNUM = "10000";
-	protected static final String TABLE = "PERSON_ARX";
-	protected static final String dbUrl = "jdbc:oracle:thin:@localhost:1521/IVZPDB";
-	protected static final String dbUser = "ARX";
-	protected static final String dbPw = "ARX";
 	
 	@Test
 	@DatabaseSetup("sampleData.xml")
