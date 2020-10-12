@@ -36,6 +36,7 @@ import org.deidentifier.arx.criteria.AverageReidentificationRisk;
 import org.deidentifier.arx.criteria.EDDifferentialPrivacy;
 import org.deidentifier.arx.criteria.KAnonymity;
 import org.deidentifier.arx.metric.Metric;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -132,12 +133,12 @@ public class PersonARXTest {
 		createHierarchyString(data, FIRST_NAME);
 		data.getDefinition().setAttributeType(DATE_OF_BIRTH, AttributeType.QUASI_IDENTIFYING_ATTRIBUTE);
 		data.getDefinition().setDataType(DATE_OF_BIRTH, DataType.DATE);
-		data.getDefinition().setAttributeType(DATE_OF_BIRTH, MicroAggregationFunction.createArithmeticMean());
 		assertTrue("Person list is empty", persons.size() > 1);
     }
     
     @Test
     public void testAverageReindentificationRisk() throws Exception {
+    	data.getDefinition().setAttributeType(DATE_OF_BIRTH, MicroAggregationFunction.createArithmeticMean());
     	config.addPrivacyModel(new AverageReidentificationRisk(0.5d));
         result = anonymizer.anonymize(data, config);
         System.out.println("AverageReindentificationRisk------------------------------");
@@ -146,27 +147,16 @@ public class PersonARXTest {
 
     @Test
     public void testKAnonyimity() throws Exception {
-    	config.addPrivacyModel(new KAnonymity(4));
-        config.setSuppressionLimit(0d);
+    	data.getDefinition().setAttributeType(DATE_OF_BIRTH, MicroAggregationFunction.createArithmeticMean());
+    	config.addPrivacyModel(new KAnonymity(2));
+        config.setSuppressionLimit(1d);
         config.setQualityModel(Metric.createEntropyMetric());
         result = anonymizer.anonymize(data, config);
         System.out.println("K-Anonyimity----------------------------------------------");
         printer.printResult(result, data);
     }
 
-    @Test
-    public void testDifferentialPrivacy() throws IOException {
-        // Create a differential privacy criterion
-        EDDifferentialPrivacy criterion = new EDDifferentialPrivacy(2d, 0.00001d,
-                DataGeneralizationScheme.create(data, GeneralizationDegree.MEDIUM));
-
-        ARXConfiguration config = ARXConfiguration.create();
-        config.addPrivacyModel(criterion);
-        config.setSuppressionLimit(1d);
-        result = anonymizer.anonymize(data, config);
-        System.out.println("DifferentialPrivacy----------------------------------------------");
-    }
-
+    @After
     public void updateDb() throws ParseException {
         final int initialPersonCount = persons.size();
         assertTrue("At least two persons are required in the dataset!", initialPersonCount > 1);
@@ -228,7 +218,7 @@ public class PersonARXTest {
     }
 
     private String checkNull(String input) {
-        if (input.equalsIgnoreCase("null")) {
+        if (input.equalsIgnoreCase("null") || input.equalsIgnoreCase("*")) {
             return null;
         } else {
             return input;
