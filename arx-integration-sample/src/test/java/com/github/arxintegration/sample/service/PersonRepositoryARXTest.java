@@ -50,7 +50,7 @@ import com.github.arxintegration.sample.entity.PersonArx;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class })
-public class PersonARXTest {
+public class PersonRepositoryARXTest {
 	/** Column names of person data input */
 	protected static final String ID = "ID";
 	protected static final String ORGANISATION_NAME = "ORGANISATION_NAME";
@@ -96,13 +96,13 @@ public class PersonARXTest {
 	protected static final String ROWNUM = "10000";
 	protected static final String TABLE = "PERSON_ARX";
 	protected static final String dbUrl = "jdbc:oracle:thin:@localhost:1521/IVZPDB";
-	protected static final String dbUser = "ARX";
-	protected static final String dbPw = "ARX";
+	protected static final String dbUser = "IVZ";
+	protected static final String dbPw = "IVZ";
 
 	@Autowired
 	private PersonService personService;
 	
-    public PersonARXTest() {
+    public PersonRepositoryARXTest() {
         printer = new Printer();
     }
 
